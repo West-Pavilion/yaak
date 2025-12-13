@@ -129,3 +129,19 @@ jobs:
           releaseDraft: true
           prerelease: true
           args: '${{ matrix.args }} --config ./src-tauri/tauri.release.conf.json'
+
+      - name: Upload build artifacts
+        if: ${{ success() }}   # 如果想在失败时也保留，可改成 always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: yaak-${{ matrix.os }}-${{ matrix.yaak_arch }}
+          path: |
+            src-tauri/target/release/bundle/**/*.dmg
+            src-tauri/target/release/bundle/**/*.app.tar.gz
+            src-tauri/target/release/bundle/**/*.appimage
+            src-tauri/target/release/bundle/**/*.deb
+            src-tauri/target/release/bundle/**/*.rpm
+            src-tauri/target/release/bundle/**/*.msi
+            src-tauri/target/release/bundle/**/*.exe
+            src-tauri/target/release/bundle/**/*.zip
+          retention-days: 14
