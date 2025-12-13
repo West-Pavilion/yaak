@@ -40,7 +40,6 @@
     "macOS": {
       "minimumSystemVersion": "13.0",
       "exceptionDomain": "",
-      "entitlements": "macos/entitlements.plist",
       "frameworks": []
     },
     "windows": {},
