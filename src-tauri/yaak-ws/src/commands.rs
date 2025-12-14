@@ -435,6 +435,12 @@ pub(crate) async fn connect<R: Runtime>(
                     has_written_close = true;
                 }
 
+                // Skip Ping/Pong heartbeat messages - they are protocol-level messages
+                // used to keep the connection alive and are not useful to display
+                if matches!(message, Message::Ping(_) | Message::Pong(_)) {
+                    continue;
+                }
+
                 app_handle
                     .db()
                     .upsert_websocket_event(
